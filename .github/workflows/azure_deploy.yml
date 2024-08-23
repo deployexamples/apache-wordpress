@@ -1,0 +1,40 @@
+name: Azure VM CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  web-deploy:
+    name: Deploy
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up SSH
+        uses: webfactory/ssh-agent@v0.7.0
+        with:
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+
+      - name: Verify npm and pm2
+        run: |
+          ssh -o StrictHostKeyChecking=no ${{ secrets.VPS_USER_IP }} << 'EOF'
+            export PATH=$PATH: ${{ secrets.VPS_NVM_PATH }}
+            which npm
+            which pm2
+            npm --version
+            pm2 --version
+          EOF
+
+      - name: Deploy to Azure VM
+        run: |
+          ssh -o StrictHostKeyChecking=no ${{ secrets.VPS_USER_IP }} << 'EOF'
+            cd ${{ secrets.VPS_PATH }}
+            export PATH=$PATH: ${{ secrets.VPS_NVM_PATH }}
+            git pull origin main
+            npm install
+            pm2 reload pubg_obs
+          EOF
