@@ -2,7 +2,54 @@
 
 wordpress with apache server and mysql database at specified domain
 
-## APache Installation
+## Apache Installation
+
+### Step 1: Install Apache
+
+```bash
+sudo apt update
+sudo apt install apache2
+```
+
+### Step 2: Verify the Installation
+
+After installing Apache, you can verify that the service is running by typing:
+
+```bash
+sudo systemctl status apache2
+```
+
+You should see output similar to the following:
+
+```bash
+● apache2.service - The Apache HTTP Server
+     Loaded: loaded (/lib/systemd/system/apache2.service; enabled; vendor preset: enabled)
+     Active: active (running) since Mon 2021-06-21 15:00:00 UTC; 1min 30s ago
+       Docs: https://httpd.apache.org/docs/2.4/
+   Main PID: 12345 (apache2)
+      Tasks: 55 (limit: 1137)
+     Memory: 6.0M
+     CGroup: /system.slice/apache2.service
+             ├─12345 /usr/sbin/apache2 -k start
+             ├─12346 /usr/sbin/apache2 -k start
+             └─12347 /usr/sbin/apache2 -k start
+```
+
+The output shows that Apache is active and running. The "active (running)" part of the output indicates that Apache is running. If Apache is not running, you can start it using:
+
+```bash
+sudo systemctl start apache2
+```
+
+### Step 3: Configure Apache to Start on Boot
+
+To ensure that Apache starts automatically when your server boots, you can enable the service using the following command:
+
+```bash
+sudo systemctl enable apache2
+```
+
+## Configure Apache
 
 To configure Apache to serve a website based on a domain name, you'll need to set up a Virtual Host. Here's how you can do it on Ubuntu:
 
