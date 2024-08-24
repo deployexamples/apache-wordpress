@@ -158,7 +158,7 @@ If you need to use SSL (HTTPS), you can obtain and configure an SSL certificate 
 ## Wordpress Setup
 
 ```bash
-git clone --no-checkout --depth 1 <repository_url> <destination_directory>
+git clone --depth 1 <repository_url> <destination_directory>
 ```
 
 - <repository_url> - this repository_url
